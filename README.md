@@ -1,18 +1,20 @@
 # [Repositorio Tercera Escuela de Computación Cuántica, Universidad de Chile, Santiago de Chile, 2025](https://miroptics.cl/ecc2025)
 
+[Sitio web oficial](https://miroptics.cl/ecc2025)
+
 ## Programa
 
 ### Lunes 06
-![programa_lunes](imgs/06_lunes.jpg)
+![programa_lunes](imgs/06_lunes.png)
 
 ### Martes 07
-![programa_martes](imgs/07_martes.jpg)
+![programa_martes](imgs/07_martes.png)
 
 ### Miércoles 08
-![programa_miercoles](imgs/08_miercoles.jpg)
+![programa_miercoles](imgs/08_miercoles.png)
 
 ### Jueves 09
-![programa_jueves](imgs/09_jueves.jpg)
+![programa_jueves](imgs/09_jueves.png)
 
 ### Viernes 10
-![programa_viernes](imgs/10_viernes.jpg)
+![programa_viernes](imgs/10_viernes.png)
