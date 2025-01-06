@@ -5,16 +5,16 @@
 ## Programa
 
 ### Lunes 06
-![programa_lunes](imgs/06_lunes.png)
+![programa_lunes](img/06_lunes.png)
 
 ### Martes 07
-![programa_martes](imgs/07_martes.png)
+![programa_martes](img/07_martes.png)
 
 ### Miércoles 08
-![programa_miercoles](imgs/08_miercoles.png)
+![programa_miercoles](img/08_miercoles.png)
 
 ### Jueves 09
-![programa_jueves](imgs/09_jueves.png)
+![programa_jueves](img/09_jueves.png)
 
 ### Viernes 10
-![programa_viernes](imgs/10_viernes.png)
+![programa_viernes](img/10_viernes.png)
