@@ -28,5 +28,6 @@ setup(
         "keras",
         "pyscf",
         "qiskit_nature",
+        "qiskit_machine_learning",
     ],
 )
