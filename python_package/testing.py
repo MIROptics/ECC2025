@@ -570,3 +570,30 @@ def test_6c( H_Schwinger, CVQE4Schwinger, VQE4Schwinger ):
     else:
         print('Tu solución esta incorrecta.')
 
+
+def test_7a(qc_function: callable):
+    qc = qc_function()
+    sol = True
+
+    if qc.num_qubits != 4:
+        sol = False
+        print('Tu circuito no tiene 4 qubits.')
+
+    if qc.num_parameters == 0:
+        print('Tu circuito no tiene parametros.')
+        sol = False
+    elif qc.num_parameters > 4:
+        print('Tu circuito tiene muchos parametros')
+        sol = False
+
+    if qc.depth() >= 20:
+        print(f'Tu circuito debe tener una profundidad menor a 20. Tiene {qc.depth()}')
+
+    for op in qc.count_ops().keys():
+        if op in ['h', 'rz', 'cx', 'ry']:
+            pass
+        else:
+            print(f'Estas usando una puerta no permitida, {op}.')
+
+    if sol:
+        print('Tu circuito es correcto')
