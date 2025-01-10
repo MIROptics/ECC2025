@@ -671,15 +671,18 @@ def test_8a( qc_dato ):
 
 def test_8b(global_hamiltonian, local_hamiltonian):
     H_global = global_hamiltonian().to_matrix()
-    H_global_matrix = np.load( 'H_global_matrix.npy' )
-    np.allclose( H_global, H_global_matrix )
+
+    # Load files
+    H_global_matrix = np.load('data/test8_H_global_matrix.npy')
+    H_local_matrix = np.load('data/test8_H_local_matrix.npy')
+    
+    np.allclose(H_global, H_global_matrix)
 
     H_local = local_hamiltonian().to_matrix()
-    # np.save( 'H_local_matrix.npy', H_local )
-    H_local_matrix = np.load( 'H_local_matrix.npy' )
-    np.allclose( H_local, H_local_matrix )
+    
+    np.allclose(H_local, H_local_matrix)
 
-    if np.allclose( H_global, H_global_matrix ) and np.allclose( H_local, H_local_matrix ):
+    if np.allclose(H_global, H_global_matrix) and np.allclose(H_local, H_local_matrix):
         print('Tus Hamiltonianos están correctos!!')
     else:
         print('Tus Hamiltonianos están equivocados!!')
