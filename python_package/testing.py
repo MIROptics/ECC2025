@@ -19,7 +19,11 @@ from qiskit_aer.primitives import Estimator
 from qiskit.primitives import Estimator as Estimator_ideal
 from sklearn.svm import SVC 
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
+from qiskit.transpiler.passes import RemoveBarriers
+from qiskit_ibm_runtime.fake_provider import FakeRochesterV2
+from qiskit_aer.primitives import Sampler
 
+sampler = Sampler()
 
 ### NO MODIFICAR ###
 
@@ -905,3 +909,68 @@ def test_7c( Kq_train, y_train, Kq_test, y_test ):
         print('La fidelidad es inferior al 90%. Vuelve a los desafios anteriores para intentar mejorar tu discriminador.')
 
     return None
+
+
+def test_9a( qc_flip ):
+
+    qc_test = QuantumCircuit(5,3)
+    qc_test.ry(0,0)
+    qc_test.compose( qc_flip, qubits=[0,1,2,3,4],
+                    clbits=[0,1], inplace=True )
+    qc_test.measure( [0,1,2], [0,1,2] )
+    job = sampler.run( qc_test )
+    probs = job.result().quasi_dists[0]
+    bool0 = np.isclose( probs.get(0,0), 1, rtol=0.1 )
+
+    qc_test = QuantumCircuit(5,3)
+    qc_test.ry(np.pi/2,0)
+    qc_test.compose( qc_flip, qubits=[0,1,2,3,4],
+                    clbits=[0,1], inplace=True )
+    qc_test.measure( [0,1,2], [0,1,2] )
+    job = sampler.run( qc_test )
+    probs = job.result().quasi_dists[0]
+    bool1 = np.isclose( probs.get(0,0), .5, rtol=0.1 ) and np.isclose( probs.get(7,0), .5, rtol=0.1 )
+
+    qc_test = QuantumCircuit(5,3)
+    qc_test.ry( np.pi, 0 )
+    qc_test.compose( qc_flip, qubits=[0,1,2,3,4],
+                    clbits=[0,1], inplace=True )
+    qc_test.measure( [0,1,2], [0,1,2] )
+    job = sampler.run( qc_test )
+    probs = job.result().quasi_dists[0]
+    bool2 = np.isclose( probs.get(7,0), 1, rtol=0.1 )
+
+    if bool0 and bool1 and bool2:
+        print( 'Felicidades, tu código corrige amplitud')
+    else:
+        print( 'Tu código esta no corrige los errores')
+
+
+def test_9c(shor_code, layout ):
+    real_backend = FakeRochesterV2()
+    aer = AerSimulator()
+    coupling_map = list( real_backend.coupling_map )
+    basis_gates = [ 'h', 'u', 'cx', 'swap' ]
+
+    def count_gates( shor_code, layout ):
+        qc_shor = shor_code()
+        qc_shor = RemoveBarriers()(qc_shor)
+        qc_transpiled = transpile( qc_shor, aer, basis_gates=basis_gates,
+                                coupling_map=real_backend.coupling_map,
+                                optimization_level=0 , seed_transpiler=0,
+                                initial_layout=layout )
+        return qc_transpiled.count_ops()
+
+
+    if count_gates( shor_code, layout )['swap']<40:
+        print('Felicidades, tu mapeo emplea menos de 40 swaps')
+    else:
+        print('Tu mapeo emplea muchas swaps')
+
+
+def test_9b(qc_shor_code):
+
+    if qc_shor_code.count_ops()['cx']==32:
+        print( 'Felicidades, tu circuito tiene 32 cx' )
+    else:
+        print( 'Tu circuito tiene muchas cx')
