@@ -387,7 +387,7 @@ def test_4b( qcs, alice_trits, bob_trits ):
         qc.remove_final_measurements()
         is_equal = False
         for ind, op in enumerate(Ops_2qb):
-            if np.isclose(np.linalg.norm(Operator(qc).to_matrix() - op), 0):
+            if np.allclose( np.abs(op.T.conj()@Operator(qc).to_matrix()) - np.eye(4) , 0):
                 is_equal = True
                 op_indices.append(ind)
         if not is_equal:
