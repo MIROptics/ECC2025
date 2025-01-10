@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt 
 from inspect import isfunction
@@ -673,8 +674,8 @@ def test_8b(global_hamiltonian, local_hamiltonian):
     H_global = global_hamiltonian().to_matrix()
 
     # Load files
-    H_global_matrix = np.load('data/test8_H_global_matrix.npy')
-    H_local_matrix = np.load('data/test8_H_local_matrix.npy')
+    H_global_matrix = np.load(os.path.join(__file__, 'data/test8_H_global_matrix.npy'))
+    H_local_matrix = np.load(os.path.join(__file__, 'data/test8_H_local_matrix.npy'))
     
     np.allclose(H_global, H_global_matrix)
 
