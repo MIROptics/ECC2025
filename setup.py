@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="ECC2025",
-    version="0.1.4",
+    version="0.1.5",
     description="ECC2025",
     url="https://github.com/MIROptics/ECC2025",
     author="Luciano Pereira",
@@ -29,5 +29,6 @@ setup(
         "pyscf",
         "qiskit_nature",
         "qiskit_machine_learning",
+        "qiskit_finance",
     ],
 )
