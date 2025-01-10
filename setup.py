@@ -12,6 +12,7 @@ setup(
     license="Apache 2.0",
     packages=["ECC2025"],
     package_dir={"ECC2025": "python_package"},
+    include_package_data=True,
     install_requires=[
         "numpy",
         "scipy",
