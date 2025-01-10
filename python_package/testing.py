@@ -17,6 +17,9 @@ from qiskit_algorithms.optimizers import COBYLA
 from qiskit_aer.noise import NoiseModel, depolarizing_error
 from qiskit_aer.primitives import Estimator
 from qiskit.primitives import Estimator as Estimator_ideal
+from sklearn.svm import SVC 
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
+
 
 ### NO MODIFICAR ###
 
@@ -831,6 +834,7 @@ def test_8b(global_hamiltonian, local_hamiltonian):
 #         print('Tu solución esta incorrecta.')
 
 
+
 def test_7a(qc_function: callable):
     qc = qc_function()
     sol = True
@@ -857,3 +861,44 @@ def test_7a(qc_function: callable):
 
     if sol:
         print('Tu circuito es correcto')
+
+
+def test_7b( kernel_element ):
+    
+    qc_swap_test, value = kernel_element( np.zeros(4), np.zeros(4) ) 
+    bool1 = np.isclose( value, 1 )
+
+    qc_swap_test, value = kernel_element( [1,1,0,1], [1,0,1,0] ) 
+    bool2 = np.isclose( value, 0.12517680639492335 )
+
+    qc_swap_test, value = kernel_element( [1,0,0,1], [1,0,0,0] ) 
+    bool3 = np.isclose( value, 0.1441833466772665 )
+
+    qc_swap_test, value = kernel_element( [1,1,1,1], [1,0.5,0,0] ) 
+    bool4 = np.isclose( value, 0.157364964492334 )
+
+    qc_swap_test, value = kernel_element( [1,1,1,1], [1,1,1,0.9] ) 
+    bool5 = np.isclose( value, 0.9846606141390186 )
+
+    if bool1 and bool2 and bool3 and bool4 and bool5:
+        print( 'El swap-test esta correcto')
+    else:
+        print('EL swap test no estima la fidelidad')
+
+
+def test_7c( Kq_train, y_train, Kq_test, y_test ):
+    svm = SVC( kernel = 'precomputed' )
+    svm.fit( Kq_train, y_train )
+    Y_pred_quantum = svm.predict( Kq_test )
+
+    quantum = confusion_matrix(y_test, Y_pred_quantum)
+
+    ConfusionMatrixDisplay(confusion_matrix=quantum).plot();
+    print(classification_report(y_test, Y_pred_quantum))
+
+    if svm.score( Kq_test, y_test ) > 0.90:
+        print('Felicidades! Tu discrimindor alcanza una calidad superior al 90%.')
+    else:
+        print('La fidelidad es inferior al 90%. Vuelve a los desafios anteriores para intentar mejorar tu discriminador.')
+
+    return None
