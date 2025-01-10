@@ -416,9 +416,12 @@ def test_4c( key, alice_random_trits, bob_random_trits  ):
         if (a==1 and b==0) or (a==2 and b==1):
             len_key = len_key + 1 
 
-    is_zeros = (np.array([int(digit) for digit in key]) == 0).all()
-    if is_zeros:
-        return print('La clave no pueden ser solo ceros')
+    # Assumes key len >> 10
+    threshold = max(len(key) // 10, 10)
+    not_enough_zeros = key.count('0') < threshold
+    not_enough_ones  = key.count('1') < threshold
+    if not_enough_zeros or not_enough_ones:
+        return print('La clave no es correcta')
 
     if len(key) == len_key:
         print('Felicidades, tu clave es segura')
