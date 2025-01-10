@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="ECC2025",
-    version="0.1.6",
+    version="0.1.7",
     description="ECC2025",
     url="https://github.com/MIROptics/ECC2025",
     author="Luciano Pereira",
